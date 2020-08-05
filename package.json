@@ -1,0 +1,99 @@
+{
+  "name": "souler-player",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development npm-run-all -p start:renderer start:main start:electron",
+    "start:renderer": "webpack-dev-server --config config/webpack.dev.js",
+    "start:main": "ncc build src/main/index.ts -e electron",
+    "start:electron": "wait-on http-get://localhost:3000/ && electron .",
+    "build": "cross-env NODE_ENV=production npm-run-all -p build:renderer build:main",
+    "build:renderer": "webpack --config config/webpack.prod.js",
+    "build:main": "ncc build src/main/index.ts -e electron -m",
+    "fix": "eslint --fix ./src",
+    "makeicon": "electron-icon-maker --input src/assets/icon.png --output=./dist",
+    "package": "rm -rf dist && yarn build && yarn makeicon && electron-builder",
+    "commit": "git add . && git-cz"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.0",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-decorators": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-typescript": "^7.10.4",
+    "@hot-loader/react-dom": "^16.13.0",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/styled-components": "^5.1.1",
+    "@typescript-eslint/eslint-plugin": "^3.1.0",
+    "@typescript-eslint/parser": "^3.3.0",
+    "@zeit/ncc": "^0.22.3",
+    "babel-loader": "^8.1.0",
+    "commitizen": "^4.1.2",
+    "cross-env": "^7.0.2",
+    "css-loader": "^4.1.1",
+    "electron": "^9.1.2",
+    "electron-builder": "^22.7.0",
+    "electron-icon-maker": "^0.0.4",
+    "emoji-cz": "^0.3.1",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.5",
+    "file-loader": "^6.0.0",
+    "fork-ts-checker-webpack-plugin": "^5.0.12",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.5",
+    "style-loader": "^1.2.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
+    "wait-on": "^5.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.9"
+  },
+  "dependencies": {
+    "ahooks": "^2.3.0",
+    "axios": "^0.19.2",
+    "mobx": "^5.15.4",
+    "mobx-react-lite": "^2.0.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
+    "react-slick": "^0.27.1",
+    "react-spring": "^8.0.27",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^5.1.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "emoji-cz"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn fix"
+    }
+  },
+  "build": {
+    "appId": "com.souler.player",
+    "files": [
+      "!**/*",
+      "package.json",
+      "dist",
+      "!dist/icons"
+    ],
+    "directories": {
+      "output": "package"
+    },
+    "mac": {
+      "icon": "dist/icons/mac/icon.icns"
+    }
+  }
+}
