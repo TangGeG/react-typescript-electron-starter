@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   mode: 'development',
@@ -28,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /\.(gif|png|jpe?g|svg|woff|ttf|eot)$/,
@@ -49,6 +50,10 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/assets/index.html'),
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash:8].css',
+      chunkFilename: '[id].[hash:8].css',
     }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(
