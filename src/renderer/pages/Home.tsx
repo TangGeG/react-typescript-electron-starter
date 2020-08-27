@@ -1,6 +1,8 @@
 import React from 'react'
 import { observer } from 'mobx-react-lite'
-import { styled } from '@/styles'
+import { Checkbox } from 'antd'
+
+import { styled, h } from '@/styles'
 import { appStore } from '@/store'
 import { ThemeMode } from '@/types'
 
@@ -17,24 +19,21 @@ const Wrapper = styled.div`
     align-items: center;
     margin-top: 10px;
   }
+
+  .ant-checkbox-wrapper {
+    color: ${h('fontPrimary')};
+    font-size: 20px;
+  }
 `
 
 export const Home = observer(() => {
   return (
     <Wrapper>
-      <h1>Home</h1>
-      <p>
-        <label>
-          暗黑模式:&nbsp;&nbsp;
-          <input
-            type='checkbox'
-            defaultChecked={appStore.mode === ThemeMode.Dark}
-            onClick={() => {
-              appStore.toggleTheme()
-            }}
-          />
-        </label>
-      </p>
+      <Checkbox
+        defaultChecked={appStore.mode === ThemeMode.Dark}
+        onChange={() => appStore.toggleTheme()}>
+        暗黑模式
+      </Checkbox>
     </Wrapper>
   )
 })
