@@ -39,7 +39,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^4.1.1",
     "cssnano": "^4.1.10",
-    "electron": "^9.1.2",
+    "electron": "^9.3.0",
     "electron-builder": "^22.7.0",
     "electron-icon-maker": "^0.0.4",
     "emoji-cz": "^0.3.1",
