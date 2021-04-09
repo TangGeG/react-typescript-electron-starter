@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development npm-run-all -p start:renderer start:main start:electron",
     "start:renderer": "webpack-dev-server --config config/webpack.dev.js",
     "start:main": "ncc build src/main/index.ts -e electron",
-    "start:electron": "wait-on http-get://localhost:3000/ && electron .",
+    "start:electron": "wait-on http-get://localhost:3000/ ./dist/index.js && electron .",
     "build": "cross-env NODE_ENV=production npm-run-all -p build:renderer build:main",
     "build:renderer": "webpack --config config/webpack.prod.js",
     "build:main": "ncc build src/main/index.ts -e electron -m",
